@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -72,7 +75,16 @@ if (jsonObject!=null) {
     i = new Intent(MainActivity.this, ActivityMenu.class);
     startActivity(i);
 }else{
-    Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+    Looper.prepare();//Call looper.prepare()
+
+    Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    Looper.loop();
+
 }
                 } catch (JSONException e) {
                     e.printStackTrace();
